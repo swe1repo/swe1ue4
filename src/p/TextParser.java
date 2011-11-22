@@ -4,18 +4,18 @@ public class TextParser {
 
 	private String text;
 	private String[] words;
-	private int length;
 	
 	TextParser() {
 		
 	}
 	
-	public void readText(String str) {
+	public String[] readText(String str) {
 		text = str;
-		length = text.length();
+		
+		return splitText();
 	}
 	
-	public void splitText() {
+	public String[] splitText() {
 		String delimiter = " ";
 		
 		words = text.split(delimiter);
@@ -25,6 +25,8 @@ public class TextParser {
 		for(int i=0;i<words.length;i++) {
 			System.out.println(words[i] +" - Word found");
 		}
+		
+		return words;
 	}
 	
 	public void evaluateWords() {

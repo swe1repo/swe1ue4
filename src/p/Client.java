@@ -11,9 +11,13 @@ public class Client implements Runnable {
 
 	private Socket socket;
 	private String message;
+	private TextParser parser;
+	private PluginManager pluginManager;
 	
 	Client(Socket socket_) {
 		socket = socket_;
+		parser = new TextParser();
+		pluginManager = new PluginManager();
 	}
 
 	String getMessage() {
@@ -29,23 +33,26 @@ public class Client implements Runnable {
 		for(;;) {
 			try {
 				message = readMessage(socket);
+	
+				System.out.println("Socket "+ socket.getLocalSocketAddress() +": "+ message);
+	
+				String[] words = parser.readText(message);
+				
+				String message = pluginManager.getMessageFromPlugin(words);
+				
+				writeMessage(message);
+				
 			} catch (IOException e) {
 				try {
 					socket.close();
 				} catch (IOException e1) {
-					System.err.println("failed to close port "+ socket);
+					System.err.println("Failed to close port "+ socket);
 					e1.printStackTrace();
 					return;
 				}
 				e.printStackTrace();
+				return;
 			}
-			System.out.println("Socket "+ socket.getLocalSocketAddress() +": "+ message);
-			// writeMessage(nachricht);
-			
-			//TODO:client stuff
-			TextParser parser = new TextParser();
-			parser.readText(message);
-			parser.splitText();
 		}
 	}
 
@@ -55,13 +62,13 @@ public class Client implements Runnable {
 		BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(socket.getInputStream()));
 		String nachricht = bufferedReader.readLine(); // blockiert bis Nachricht
-														// empfangen;
+													  // empfangen;
 		return nachricht;
 	}
 
 	void writeMessage(String nachricht) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(
-				System.out));
+				socket.getOutputStream()));
 		printWriter.print(nachricht);
 		printWriter.flush();
 	}

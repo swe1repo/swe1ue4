@@ -8,7 +8,6 @@ import java.io.*;
 
 
 public class MainServer {
-
 	ServerSocket serverSocket;
 	final int port;
 	final ExecutorService executor;
@@ -41,6 +40,8 @@ public class MainServer {
 						}
 		});
 		Runtime.getRuntime().addShutdownHook(exithook);
+		
+		
 		
 		//creates Multiple Threads for eacht Client
 		for(;;) {
