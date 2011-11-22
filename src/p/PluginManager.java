@@ -8,10 +8,17 @@ public class PluginManager {
 	}
 	
 	String getMessageFromPlugin(String[] text) {
+		PluginInterface plugin = null;
+		int maxRating = 0;
+		
 		for(PluginInterface pi : plugins) {
-			if(pi.rateString(text);
+			int tmp = pi.rateString(text);
+			if( tmp > maxRating ) {
+				plugin = pi;
+				maxRating = tmp;
+			}
 		}
 		
-		return plugins[0].getMessageForString(text);
+		return plugin.getMessageForString(text);
 	}
 }
