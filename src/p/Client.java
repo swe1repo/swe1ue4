@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Client implements Runnable {
@@ -42,7 +41,11 @@ public class Client implements Runnable {
 			}
 			System.out.println("Socket "+ socket.getLocalSocketAddress() +": "+ message);
 			// writeMessage(nachricht);
+			
 			//TODO:client stuff
+			TextParser parser = new TextParser();
+			parser.readText(message);
+			parser.splitText();
 		}
 	}
 
