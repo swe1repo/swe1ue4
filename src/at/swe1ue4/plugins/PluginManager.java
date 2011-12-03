@@ -61,7 +61,8 @@ public class PluginManager {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("File at " + configFile + " could not be found.");
+			System.err.println("File at " + configFile + " could not be found." +
+							   "Please create a file containing the names of the plugins you with to load");
 			System.exit(1);
 		} finally {
 			try {

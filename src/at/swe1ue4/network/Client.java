@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import at.swe1ue4.plugins.PluginManager;
+import at.swe1ue4.textparser.TextParser;
 
 public class Client implements Runnable {
 
