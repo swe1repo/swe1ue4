@@ -26,8 +26,28 @@ public class PluginManager {
 				String line = null;
 				
 				while( (line = br.readLine()) != null ) {
-					Class<?> pluginClass = Class.forName(line);
-					plugins.add( pluginClass.newInstance() );
+					Class<?> pluginClass = null;
+					
+					try {
+						pluginClass = Class.forName(line);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+						System.exit(1);
+					}
+					
+					PluginInterface p = null;
+					
+					try {
+						p = (PluginInterface)pluginClass.newInstance();
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+						System.exit(1);
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+						System.exit(1);
+					}
+					
+					plugins.add( p );
 				}				
 			} catch (IOException e) {
 				System.err.println("Failed to obtain line from file [" + configFile + "].");
