@@ -25,18 +25,23 @@ public class Client implements Runnable {
 	public void run() {
 		System.out.println("A new client[" + socket.getLocalSocketAddress() + "] has connected.");
 		
+		// client request loop
 		while(!Thread.currentThread().isInterrupted()) {
 			try {
+				// read clients request
 				String request = readMessage(socket);
 	
 				System.out.println("[" + socket.getLocalSocketAddress() + "] received: " + request);
 	
+				// parsing the Text
 				String[] words = parser.readText(request);
 				
+				// get response from the pluginManager
 				String response = pluginManager.getMessageFromPlugin(words);
 				
 				System.out.println("[" + socket.getLocalSocketAddress() + "] responded: " + response);
 				
+				// send response
 				writeMessage(response);
 				
 			} catch (IOException e) {
