@@ -39,7 +39,9 @@ public class MathPlugin implements PluginInterface {
 		double op1 = 0, op2 = 0, res = 0;
 		int operationType = OPERATOR_UNKNOWN;
 		
+		
 		int i;
+		// determine the operation type
 		for(i = 0; i < text.length; i++) {
 			if(text[i].contains( OPERATOR_MAP.get(OPERATOR_PLUS) )) {
 				operationType = OPERATOR_PLUS;
@@ -56,6 +58,7 @@ public class MathPlugin implements PluginInterface {
 			}
 		}
 		
+		// obtain the operands
 		try {
 			if(operationType != OPERATOR_UNKNOWN) {
 				if(text[i].length() == 1) {
@@ -78,6 +81,7 @@ public class MathPlugin implements PluginInterface {
 			return ERROR_STRING;
 		}
 		
+		// calculate the result
 		switch(operationType) {
 		case OPERATOR_PLUS:
 			res = op1 + op2;
@@ -96,6 +100,7 @@ public class MathPlugin implements PluginInterface {
 			return ERROR_STRING;
 		}
 		
+		// pass back the result
 		return "Das Ergebnis der Rechnung " + op1 + " " + OPERATOR_MAP.get(operationType) + " " + op2 + " ist " + res + ".\n" ;
 	}
 

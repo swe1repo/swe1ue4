@@ -23,6 +23,9 @@ public class MainServer {
 		return port;
 	}
 	
+	/**
+	 * @return The path to the configuration file that will be used to load plugins.
+	 */
 	public static String getConfigFilepath() {
 		return MainServer.configFilePath;
 	}
@@ -44,8 +47,11 @@ public class MainServer {
 		server.run();	
 	}
 	
+	/**
+	 * Starts up the server. Once completed it will accept incoming connections and open a new socket for each.
+	 */
 	public void run(){
-		System.out.println("Starting server on port " + getPort());
+		System.out.println("Starting server on port " + getPort() + ".");
 		
 		try {
 			serverSocket = new ServerSocket(getPort());
@@ -53,6 +59,8 @@ public class MainServer {
 			System.err.println("Failed to open port " + port);
 			e.printStackTrace();
 		}
+		
+		// Declare an exit hook to call the shutdown method
 		Thread exithook = new Thread(new Runnable() {
 						public void run() {
 							shutdown();
@@ -62,7 +70,7 @@ public class MainServer {
 		
 		
 		
-		//creates Multiple Threads for each Client
+		// the server's main loop, where incoming connections are handled
 		for(;;) {
 			Socket socket = null;
 			
@@ -75,6 +83,7 @@ public class MainServer {
 			
 			Client client = new Client(socket);
 			
+			// push the client thread into the thread pool
 			try {
 				executor.execute(client);
 			} catch(RejectedExecutionException e) {
@@ -84,10 +93,11 @@ public class MainServer {
 	}
 	
 	public void shutdown() {
-		executor.shutdownNow(); // sends interrupt() to all threads
+		executor.shutdownNow(); // sends interrupt() to all threads, they will close their client sockets
 		
 		try {
 			if(serverSocket != null) {
+				// close the server's socket
 				serverSocket.close();
 			}
 		} catch (IOException e) {

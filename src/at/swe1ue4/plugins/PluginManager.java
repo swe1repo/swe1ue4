@@ -13,6 +13,10 @@ import at.swe1ue4.network.MainServer;
 public class PluginManager {
 	List<PluginInterface> plugins = new ArrayList<PluginInterface>();
 	
+	/**
+	 * The PluginManager's constructor will attempt to load the configuration file that has been passed
+	 * as a command line parameter.
+	 */
 	public PluginManager() {
 		FileReader fr = null;
 		String configFile = MainServer.getConfigFilepath();
@@ -30,6 +34,7 @@ public class PluginManager {
 					Class<?> pluginClass = null;
 					
 					try {
+						// obtains the plugins class from its name
 						pluginClass = Class.forName(line);
 					} catch (ClassNotFoundException e1) {
 						e1.printStackTrace();
@@ -40,6 +45,7 @@ public class PluginManager {
 					
 					PluginInterface p = null;
 					
+					// check if the plugin implements the PluginInterface
 					boolean implementsInterface = false;
 					for(Class<?> in : pluginClass.getInterfaces()) {
 						if(in.getName() == PluginInterface.class.getName()) {
@@ -54,6 +60,7 @@ public class PluginManager {
 					}
 					
 					try {
+						// instantiate the plugin
 						p = (PluginInterface)pluginClass.newInstance();
 					} catch (InstantiationException e) {
 						System.err.println("The class[" + pluginClass.getName() + "] could not be instantiated.");
@@ -63,6 +70,7 @@ public class PluginManager {
 						continue;
 					}
 					
+					// add it to the list of active plugins
 					plugins.add( p );
 				}				
 			} catch (IOException e) {
@@ -89,25 +97,34 @@ public class PluginManager {
 			}
 		}
 		
+		// Clients must load at least one plugin
 		if(plugins.size() < 1) {
 			System.err.println("You need at least one plugin to process text. Please supply a plugin class in your configuration file.");
 			Thread.currentThread().interrupt();
 		} else {
 			for(PluginInterface pi : plugins) {
+				// list all loaded plugins
 				System.out.println("The plugin " + pi.getClass().getName() + " has been loaded.");
 			}
 		}
 	}
 	
+	/**
+	 * This method picks the plugin with the highest rating for a given textual client request
+	 * to answer.
+	 * 
+	 * @param text The received request that has been split by the TextParser.
+	 * @return The chosen plugin's response
+	 */
 	public String getMessageFromPlugin(String[] text) {
 		PluginInterface plugin = null;
-		int maxRating = 0;
+		int maxRating = PluginInterface.MIN_RATING - 1;
 		
 		// find the plugin with highest rating
 		for(PluginInterface pi : plugins) {
 			int tmp = pi.rateString(text);
 			
-			if( tmp >= maxRating ) {
+			if( tmp > maxRating ) {
 				plugin = pi;
 				maxRating = tmp;
 			}
