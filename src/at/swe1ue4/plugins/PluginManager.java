@@ -5,12 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import at.swe1ue4.network.MainServer;
 
 
 public class PluginManager {
-	ArrayList<PluginInterface> plugins;
+	List<PluginInterface> plugins = new ArrayList<PluginInterface>();
 	
 	public PluginManager() {
 		FileReader fr = null;
@@ -32,26 +33,41 @@ public class PluginManager {
 						pluginClass = Class.forName(line);
 					} catch (ClassNotFoundException e1) {
 						e1.printStackTrace();
-						System.exit(1);
+						System.err.println("The class[" + line + "] could not be found. " + 
+								   	       "Make sure it is in your CLASSPATH and a valid class.");
+						continue;
 					}
 					
 					PluginInterface p = null;
 					
+					boolean implementsInterface = false;
+					for(Class<?> in : pluginClass.getInterfaces()) {
+						if(in.getName() == PluginInterface.class.getName()) {
+							implementsInterface = true;
+						}
+					}
+					
+					if(implementsInterface == false) {
+						System.err.println("The specified plugin[" + pluginClass.getName() + "] does not implement the PluginInterface. " +
+										   "It is going to be skipped.");
+						continue;
+					}
+					
 					try {
 						p = (PluginInterface)pluginClass.newInstance();
 					} catch (InstantiationException e) {
-						e.printStackTrace();
-						System.exit(1);
+						System.err.println("The class[" + pluginClass.getName() + "] could not be instantiated.");
+						continue;
 					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-						System.exit(1);
+						System.err.println("The class[" + pluginClass.getName() + "] could not be accessed.");
+						continue;
 					}
 					
 					plugins.add( p );
 				}				
 			} catch (IOException e) {
 				System.err.println("Failed to obtain line from file [" + configFile + "].");
-				System.exit(1);
+				Thread.currentThread().interrupt();
 			} finally {
 				try {
 					br.close();
@@ -63,13 +79,22 @@ public class PluginManager {
 		} catch (FileNotFoundException e) {
 			System.err.println("File at " + configFile + " could not be found." +
 							   "Please create a file containing the names of the plugins you with to load");
-			System.exit(1);
+			Thread.currentThread().interrupt();
 		} finally {
 			try {
 				fr.close();
 			} catch (IOException e) {
 				System.err.println("Failed to close fileReader [" + configFile + "].");
 				e.printStackTrace();
+			}
+		}
+		
+		if(plugins.size() < 1) {
+			System.err.println("You need at least one plugin to process text. Please supply a plugin class in your configuration file.");
+			Thread.currentThread().interrupt();
+		} else {
+			for(PluginInterface pi : plugins) {
+				System.out.println("The plugin " + pi.getClass().getName() + " has been loaded.");
 			}
 		}
 	}
@@ -82,7 +107,7 @@ public class PluginManager {
 		for(PluginInterface pi : plugins) {
 			int tmp = pi.rateString(text);
 			
-			if( tmp > maxRating ) {
+			if( tmp >= maxRating ) {
 				plugin = pi;
 				maxRating = tmp;
 			}

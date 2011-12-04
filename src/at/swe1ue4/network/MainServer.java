@@ -4,11 +4,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.io.*;
 
 
 public class MainServer {
-	ServerSocket serverSocket;
+	ServerSocket serverSocket = null;
 	final int port;
 	final ExecutorService executor;
 	static String configFilePath;
@@ -49,7 +50,7 @@ public class MainServer {
 		try {
 			serverSocket = new ServerSocket(getPort());
 		} catch (IOException e) {
-			System.err.println("failed to open port " + port);
+			System.err.println("Failed to open port " + port);
 			e.printStackTrace();
 		}
 		Thread exithook = new Thread(new Runnable() {
@@ -78,9 +79,12 @@ public class MainServer {
 	}
 	
 	public void shutdown() {
-		executor.shutdownNow();
+		executor.shutdownNow(); // sends interrupt() to all threads
+		
 		try {
-			serverSocket.close();
+			if(serverSocket != null) {
+				serverSocket.close();
+			}
 		} catch (IOException e) {
 			System.err.println("failed to close socket "+ port);
 			e.printStackTrace();

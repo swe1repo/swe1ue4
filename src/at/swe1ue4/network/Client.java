@@ -33,9 +33,9 @@ public class Client implements Runnable {
 	}
 	
 	public void run() {
-		System.out.println("A new client[" + socket.getLocalPort() + "] has connected.");
+		System.out.println("A new client[" + socket.getLocalSocketAddress() + "] has connected.");
 		
-		for(;;) {
+		while(!Thread.currentThread().isInterrupted()) {
 			try {
 				message = readMessage(socket);
 	
@@ -49,24 +49,21 @@ public class Client implements Runnable {
 				
 			} catch (IOException e) {
 				System.out.println("Connection to client[" + socket.getLocalPort() + "] was closed.");
-				
-				try {
-					socket.close();
-				} catch (IOException e1) {
-					System.err.println("Failed to close clients'[" + socket.getLocalPort() + "] socket.");
-					return;
-				}
-				
-				return;
+				break;
 			}
 		}
+		
+		try {
+			socket.close();
+		} catch (IOException e1) {
+			System.err.println("Failed to close clients'[" + socket.getLocalPort() + "] socket.");
+		}
 	}
-
-
 
 	String readMessage(Socket socket) throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(socket.getInputStream()));
+
 		String nachricht = bufferedReader.readLine(); // blockiert bis Nachricht
 													  // empfangen;
 		return nachricht;
