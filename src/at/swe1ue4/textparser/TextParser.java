@@ -16,17 +16,7 @@ public class TextParser {
 	}
 	
 	public String[] splitText() {
-		String delimiter = " ";
-		
-		words = text.split(delimiter);
-		
-		System.out.println(words.length +" Words found");
-		
-		for(int i=0;i<words.length;i++) {
-			System.out.println(words[i] +" - Word found");
-		}
-		
-		return words;
+		return text.split(" ");
 	}
 	
 	public void evaluateWords() {

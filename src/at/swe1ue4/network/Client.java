@@ -13,7 +13,6 @@ import at.swe1ue4.textparser.TextParser;
 public class Client implements Runnable {
 
 	private Socket socket;
-	private String message;
 	private TextParser parser;
 	private PluginManager pluginManager;
 	
@@ -22,30 +21,23 @@ public class Client implements Runnable {
 		parser = new TextParser();
 		pluginManager = new PluginManager();
 	}
-
-	String getMessage() {
-		return message;
-	}
-	
-	//should not be used -> readMessage() !
-	void setMessage(String m) {
-		message = m;
-	}
 	
 	public void run() {
 		System.out.println("A new client[" + socket.getLocalSocketAddress() + "] has connected.");
 		
 		while(!Thread.currentThread().isInterrupted()) {
 			try {
-				message = readMessage(socket);
+				String request = readMessage(socket);
 	
-				System.out.println("Socket "+ socket.getLocalSocketAddress() +": "+ message);
+				System.out.println("[" + socket.getLocalSocketAddress() + "] received: " + request);
 	
-				String[] words = parser.readText(message);
+				String[] words = parser.readText(request);
 				
-				String message = pluginManager.getMessageFromPlugin(words);
+				String response = pluginManager.getMessageFromPlugin(words);
 				
-				writeMessage(message);
+				System.out.println("[" + socket.getLocalSocketAddress() + "] responded: " + response);
+				
+				writeMessage(response);
 				
 			} catch (IOException e) {
 				System.out.println("Connection to client[" + socket.getLocalPort() + "] was closed.");

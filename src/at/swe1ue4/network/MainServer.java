@@ -4,7 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.RejectedExecutionException;
 import java.io.*;
 
 
@@ -74,7 +74,12 @@ public class MainServer {
 			}
 			
 			Client client = new Client(socket);
-			executor.execute(client);		
+			
+			try {
+				executor.execute(client);
+			} catch(RejectedExecutionException e) {
+				System.err.println("Could not open connection with client, because the executor is closed.");
+			}
 		}
 	}
 	
