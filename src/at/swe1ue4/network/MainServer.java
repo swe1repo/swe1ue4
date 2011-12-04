@@ -104,5 +104,7 @@ public class MainServer {
 			System.err.println("failed to close socket "+ port);
 			e.printStackTrace();
 		}
+		
+		System.out.println("The server has been shut down successfully.");
 	}
 }

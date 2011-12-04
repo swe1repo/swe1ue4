@@ -9,7 +9,6 @@ public class MathPlugin implements PluginInterface {
 	final static int OPERATOR_MINUS = 2;
 	final static int OPERATOR_DIVIDE = 3;
 	final static int OPERATOR_MULT = 4;
-	final static String OPERATOR_TOKENS = "+-/*";
 	final static String ERROR_STRING = "Diese Frage kann ich als Mathematiker leider nicht beantworten\n";
 	final static Map<Integer, String> OPERATOR_MAP;
 	
@@ -26,8 +25,11 @@ public class MathPlugin implements PluginInterface {
 	@Override
 	public int rateString(String[] text) {
 		for(String token : text) {
-			if(token.contains( OPERATOR_TOKENS )) {
-				return PluginInterface.MAX_RATING;
+			for(Map.Entry<Integer, String> entry : OPERATOR_MAP.entrySet() )
+			{
+				if(token.contains( entry.getValue() ) ) {
+					return PluginInterface.MAX_RATING;
+				}
 			}
 		}
 		

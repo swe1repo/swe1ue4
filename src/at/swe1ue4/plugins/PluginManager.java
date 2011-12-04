@@ -124,6 +124,8 @@ public class PluginManager {
 		for(PluginInterface pi : plugins) {
 			int tmp = pi.rateString(text);
 			
+			System.out.println("The plugin[" + pi.getClass().getName() + "] rated the input with " + tmp + ".");
+			
 			if( tmp > maxRating ) {
 				plugin = pi;
 				maxRating = tmp;

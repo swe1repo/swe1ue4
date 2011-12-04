@@ -13,5 +13,4 @@ public class NaviPlugin implements PluginInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
