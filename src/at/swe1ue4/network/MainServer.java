@@ -13,6 +13,7 @@ public class MainServer {
 	final int port;
 	final ExecutorService executor;
 	static String configFilePath;
+	static String osmFilePath;
 	
 	MainServer(int portnumber) {
 		port = portnumber;
@@ -30,16 +31,24 @@ public class MainServer {
 		return MainServer.configFilePath;
 	}
 	
+	/**
+	 * @return The path to the openstreetmap file that will be used with NaviPlugins
+	 */
+	public static String getOsmFilepath() {
+		return MainServer.osmFilePath;
+	}
+	
 	public static void print_usage() {
-		System.out.println("Usage: swe1ue4 [server port] [config filepath]");
+		System.out.println("Usage: swe1ue4 [server port] [config filepath] [osm filepath]");
 	}
 	
 	public static void main(String[] args) throws IOException {
-		if(args.length != 2) {
+		if(args.length != 3) {
 			print_usage();
 			return;
 		} else {
 			configFilePath = args[1];
+			osmFilePath = args[2];
 		}
 		
 		MainServer server = new MainServer( Integer.parseInt( args[0] ) );
@@ -57,7 +66,7 @@ public class MainServer {
 			serverSocket = new ServerSocket(getPort());
 		} catch (IOException e) {
 			System.err.println("Failed to open port " + port);
-			e.printStackTrace();
+			return;
 		}
 		
 		// Declare an exit hook to call the shutdown method

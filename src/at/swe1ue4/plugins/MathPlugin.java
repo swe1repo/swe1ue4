@@ -3,6 +3,7 @@ package at.swe1ue4.plugins;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class MathPlugin implements PluginInterface {
 	final static int OPERATOR_UNKNOWN = 0;
 	final static int OPERATOR_PLUS = 1;
