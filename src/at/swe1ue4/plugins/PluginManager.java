@@ -22,7 +22,6 @@ public class PluginManager {
 	 */
 	public PluginManager() {
 		wt = new WordTypes();
-		wt.categorize("test", "test 123");
 		FileReader fr = null;
 		String configFile = MainServer.getConfigFilepath();
 		
