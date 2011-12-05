@@ -31,7 +31,7 @@ public class MathPlugin implements PluginInterface {
 
 	@Override
 	public int rateString(String[] text) {
-		rating=0;
+		rating = 0;
 		for(String token : text) {
 			for(Map.Entry<Integer, String> entry : OPERATOR_MAP.entrySet() )
 			{	

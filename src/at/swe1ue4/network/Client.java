@@ -72,7 +72,7 @@ public class Client implements Runnable {
 	void writeMessage(String nachricht) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(
 				socket.getOutputStream()));
-		printWriter.print(nachricht);
+		printWriter.print(nachricht+"\n");
 		printWriter.flush();
 	}
 

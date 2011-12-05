@@ -38,6 +38,9 @@ public class TextParser {
 		
 		words = "how why who have has when where do i are";
 		WordTypes.categorize("questionword", words);
+		
+		words = "hello hi hey howdy greetings";
+		WordTypes.categorize("greetingword", words);
 	
 		words = "about above after around as at befor beneath behind " +
 				"beside between by for from in inside into like near " +
