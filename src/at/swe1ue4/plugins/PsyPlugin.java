@@ -1,5 +1,6 @@
 package at.swe1ue4.plugins;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import at.swe1ue4.textparser.WordTypes;
@@ -7,11 +8,11 @@ import at.swe1ue4.textparser.WordTypes;
 public class PsyPlugin implements PluginInterface{
 	int rating;
 	final static int RATING_VERB = 20;
-	final static int RATING_PRONOUN = 10;
+	final static int RATING_PRONOUN = 15;
 	final static int RATING_POSSESSIVEPRONOUN = 10;
-	final static int RATING_SIZE = 5;
-	final static int RATING_COLOR = 5;
 	final static int RATING_PREPOSITION = 15;
+	final static int RATING_KEYWORD = 20;
+	String verb;
 	
 	@Override
 	public int rateString(String[] text) {
@@ -34,14 +35,9 @@ public class PsyPlugin implements PluginInterface{
 					rating += RATING_POSSESSIVEPRONOUN;
 				}
 			}
-			for(int i=0;i<WordTypes.size.size();i++) {
-				if(token.compareTo(WordTypes.size.get(i)) == 0) {
-					rating += RATING_SIZE;
-				}
-			}
-			for(int i=0;i<WordTypes.color.size();i++) {
-				if(token.compareTo(WordTypes.color.get(i)) == 0) {
-					rating += RATING_COLOR;
+			for(int i=0;i<WordTypes.keyword.size();i++) {
+				if(token.compareTo(WordTypes.keyword.get(i)) == 0) {
+					rating += RATING_KEYWORD;
 				}
 			}
 			for(int i=0;i<WordTypes.preposition.size();i++) {
@@ -51,7 +47,7 @@ public class PsyPlugin implements PluginInterface{
 			}
 		}
 		if(rating > 100) {
-			return rating = PluginInterface.MAX_RATING;
+			return rating = PluginInterface.MAX_RATING + 1; //plus one because psyplugin has higher priority (more questions can be answered)
 		}
 		else {
 			return rating;
@@ -60,115 +56,106 @@ public class PsyPlugin implements PluginInterface{
 	
 	@Override
 	public String getMessageForString(String[] text) {
-		int count_verb = 0;
-		int count_pronoun = 0;
-		int count_possessivepronoun = 0;
-		int count_size = 0;
-		int count_color = 0;
-		int count_preposition = 0;
-		int count_greetingword = 0;
-		int count_questionword = 0;
-		int count_number = 0;
-		int count_punctuation = 0;
+		//TODO: Make ignorlist for verbs to be ignored (is, are, am, can, ...)
+		for(String asd : text) {
+			for(int i=0;i<WordTypes.verb.size();i++) {
+				if(asd.compareTo(WordTypes.verb.get(i)) == 0) {
+					//ignore the can verb because in the "can you" response program needs the second verb
+					if((asd.compareTo("can") != 0) && asd.compareTo("are") != 0) {
+						this.verb = asd;
+					}
+				}
+			}	
+		}
+		for(String as : text) {
+			for(int i=0;i<WordTypes.verb.size();i++) {
+				if(as.compareTo(WordTypes.verb.get(i)) == 0) {
+					//special case in order to respond to "you are" statement. otherwise the programm goes to "you" answers.
+					if(as.compareTo("are") == 0) {
+						return foundKeyWord(as);
+					}		
+				}
+			}	
+		}
+		
 		
 		//evaluate every single word. words with high priority should be at the top
 		for(String token : text) {
 			for(int i=0;i<WordTypes.greetingword.size();i++) {
 				if(token.compareTo(WordTypes.greetingword.get(i)) == 0) {
-					count_greetingword += foundGreetingWord(token);
-					return "Very nice to meet you! How can i help you?";
+					return foundGreetingWord(token);
 				}
 			}
 			for(int i=0;i<WordTypes.questionword.size();i++) {
 				if(token.compareTo(WordTypes.questionword.get(i)) == 0) {
-					count_questionword += foundQuestionWord(token);
-					if(count_questionword > 1) {
-						return "Everything is going to be fine. Please ask me one question at a time :)";
-					}
-					if(count_questionword == 1) {
-						return "That is a very good question! Hopefully with further implementation i can answer" +
-								" your that.";
-					}
+					return foundQuestionWord(token);
 				}
 			}
-			for(int i=0;i<WordTypes.verb.size();i++) {
-				if(token.compareTo(WordTypes.verb.get(i)) == 0) {
-					count_verb += foundVerb(token);
-					return "You said the following verb: \""+token+"\". \nCome back later when implementation is complete!";
-				}
-			}
-			for(int i=0;i<WordTypes.pronoun.size();i++) {
-				if(token.compareTo(WordTypes.pronoun.get(i)) == 0) {
-				}
-			}
-			for(int i=0;i<WordTypes.possessivepronoun.size();i++) {
-				if(token.compareTo(WordTypes.possessivepronoun.get(i)) == 0) {
-				}
-			}
-			for(int i=0;i<WordTypes.size.size();i++) {
-				if(token.compareTo(WordTypes.size.get(i)) == 0) {
-				}
-			}
-			for(int i=0;i<WordTypes.color.size();i++) {
-				if(token.compareTo(WordTypes.color.get(i)) == 0) {
-				}
-			}
-			for(int i=0;i<WordTypes.preposition.size();i++) {
-				if(token.compareTo(WordTypes.preposition.get(i)) == 0) {
-				}
-			}
-			for(int i=0;i<WordTypes.number.size();i++) {
-				if(token.compareTo(WordTypes.number.get(i)) == 0) {
-					
-				}
-			}
-			for(int i=0;i<WordTypes.punctuation.size();i++) {
-				if(token.compareTo(WordTypes.punctuation.get(i)) == 0) {
-					
+			for(int i=0;i<WordTypes.keyword.size();i++) {
+				if(token.compareTo(WordTypes.keyword.get(i)) == 0) {
+					return foundKeyWord(token);
 				}
 			}
 		}
-		return null;
-	}
-	
-	public int foundGreetingWord(String word) {
-		return 1;
-	}
-	
-	public int foundQuestionWord(String word) {
-		return 1;
-	}
 
-	public int foundVerb(String word) {
-		
-		return 1;
+		//if no question to this point has been answered choose one from random-Answers
+		return getrandomAnswer();
 	}
 	
-	public void foundPunctuation() {
-		
+	public String foundGreetingWord(String word) {
+		int random = 0 + (int) (Math.random() * (WordTypes.greetingAnswer.size() - 0));	
+		return WordTypes.greetingAnswer.get(random);
 	}
 	
-	public void foundSize() {
+	public String foundQuestionWord(String word) {
+		int random = 0 + (int) (Math.random() * (WordTypes.questionAnswer.size() - 0));
+		int jumpToRandomAnswer = 1 + (int) (Math.random() * (3 - 1));
 		
+		if(jumpToRandomAnswer == 2) {
+			return getrandomAnswer();
+		}
+		else {
+			return WordTypes.questionAnswer.get(random);
+		}
 	}
 	
-	public void foundPossessivepronoun() {
-		
+	public String foundKeyWord(String word) {
+		int random;
+		if(word.compareTo("yes") == 0) {
+			random = 0 + (int) (Math.random() * (WordTypes.yesAnswer.size() - 0));
+			return WordTypes.yesAnswer.get(random);
+		}
+		else if(word.compareTo("no") == 0) {
+			random = 0 + (int) (Math.random() * (WordTypes.noAnswer.size() - 0));
+			return WordTypes.noAnswer.get(random);
+		}
+		else if(word.compareTo("are") == 0) {
+			random = 0 + (int) (Math.random() * (WordTypes.youAreAnswer.size() - 0));
+			return WordTypes.youAreAnswer.get(random) +" "+ verb + "?";
+		}
+		else if(word.compareTo("you") == 0) {
+			random = 0 + (int) (Math.random() * (WordTypes.youAnswer.size() - 0));
+			return WordTypes.youAnswer.get(random);
+		}
+		else if(word.compareTo("because") == 0) {
+			random = 0 + (int) (Math.random() * (WordTypes.becauseAnswer.size() - 0));
+			return WordTypes.becauseAnswer.get(random);
+		}
+		else if(word.compareTo("can") == 0) {
+			random = 0 + (int) (Math.random() * (WordTypes.canYouAnswer.size() - 0));
+			ArrayList<String> tmp = new ArrayList<String>();
+			tmp.add(WordTypes.canYouAnswer.get(0) + verb + " your self.");
+			tmp.add(WordTypes.canYouAnswer.get(1) + verb + " dont you?");
+			tmp.add(WordTypes.canYouAnswer.get(2));
+			return tmp.get(random);
+		}
+		else {
+			return "roses are red\nviolets are blue\nsome poems rhyme\nbut not this one.";
+		}
 	}
 	
-	public void foundColor() {
-		
-	}
-	
-	public void foundNumber() {
-		
-	}
-	
-	public void foundPreposition() {
-		
-	}
-	
-	public void foundPronoun() {
-		
+	public String getrandomAnswer() {
+		int random = 0 + (int) (Math.random() * (WordTypes.randomAnswer.size() - 0));
+		return WordTypes.randomAnswer.get(random);
 	}
 }

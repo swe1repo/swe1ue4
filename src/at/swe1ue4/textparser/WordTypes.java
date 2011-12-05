@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class WordTypes {
 
-	//public static ArrayList<ArrayList<String>> types;
 	public static ArrayList<String> realnumber = new ArrayList<String>();
 	public static ArrayList<String> verb = new ArrayList<String>();
 	public static ArrayList<String> operator = new ArrayList<String>();
@@ -18,12 +17,22 @@ public class WordTypes {
 	public static ArrayList<String> questionword = new ArrayList<String>();
 	public static ArrayList<String> pronoun = new ArrayList<String>();
 	public static ArrayList<String> greetingword = new ArrayList<String>();
+	public static ArrayList<String> keyword = new ArrayList<String>();
+	
+	public static ArrayList<String> yesAnswer = new ArrayList<String>();
+	public static ArrayList<String> noAnswer = new ArrayList<String>();
+	public static ArrayList<String> youAnswer = new ArrayList<String>();
+	public static ArrayList<String> youAreAnswer = new ArrayList<String>();
+	public static ArrayList<String> becauseAnswer = new ArrayList<String>();
+	public static ArrayList<String> randomAnswer = new ArrayList<String>();
+	public static ArrayList<String> canYouAnswer = new ArrayList<String>();
+	public static ArrayList<String> questionAnswer = new ArrayList<String>();
+	public static ArrayList<String> greetingAnswer = new ArrayList<String>();
 	
 	
 	private static String[] tmp;
 	
 	public WordTypes() {
-		//types = new ArrayList<ArrayList<String>>();
 	}
 	
 	public static void categorize(String cat,String words) {
@@ -97,20 +106,40 @@ public class WordTypes {
 				greetingword.add(tmp[i]);
 			}
 		}
-		/*
-		for(int i=0;i<tmp.length;i++) {
-			types.add(new ArrayList<String>());
+		if(cat.compareTo("keyword") == 0) {
+			for(int i=0;i<tmp.length;i++) {
+				keyword.add(tmp[i]);
+			}
 		}
-		
-		for(int i=0;i<tmp.length;i++) {
-			types.get(0).add(cat);
-			types.get(1).add(tmp[i]);
-		}*/
 	}
-/*
-	public static void printTypes() {
-		for(int i=0;i<types.size();i++) {
-			System.out.println(types.get(0).get(i) +" | "+ types.get(1).get(i));
+	
+	public static void init_answers(String cat, String answer) {
+		if(cat.compareTo("yesAnswer") == 0) {
+			yesAnswer.add(answer);
 		}
-	}*/
+		if(cat.compareTo("noAnswer") == 0) {
+			noAnswer.add(answer);
+		}
+		if(cat.compareTo("questionAnswer") == 0) {
+			questionAnswer.add(answer);
+		}
+		if(cat.compareTo("youAnswer") == 0) {
+			youAnswer.add(answer);
+		}
+		if(cat.compareTo("youAreAnswer") == 0) {
+			youAreAnswer.add(answer);
+		}
+		if(cat.compareTo("becauseAnswer") == 0) {
+			becauseAnswer.add(answer);
+		}
+		if(cat.compareTo("canYouAnswer") == 0) {
+			canYouAnswer.add(answer);
+		}
+		if(cat.compareTo("randomAnswer") == 0) {
+			randomAnswer.add(answer);
+		}
+		if(cat.compareTo("greetingAnswer") == 0) {
+			greetingAnswer.add(answer);
+		}
+	}
 }
