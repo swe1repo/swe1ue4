@@ -20,6 +20,8 @@ public class Client implements Runnable {
 		socket = socket_;
 		parser = new TextParser();
 		pluginManager = new PluginManager();
+		//initialise some words for proper selection of plugin manager
+		pluginManager.init_wordTypes();
 	}
 	
 	public void run() {
