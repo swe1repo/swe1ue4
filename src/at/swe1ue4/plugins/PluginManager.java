@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.swe1ue4.textparser.*;
+
 import at.swe1ue4.network.MainServer;
 
 
@@ -21,7 +23,7 @@ public class PluginManager {
 		FileReader fr = null;
 		String configFile = MainServer.getConfigFilepath();
 		
-		// load the configuration file
+		// load the configuration file.
 		try {
 			fr = new FileReader( configFile );
 			

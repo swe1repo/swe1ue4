@@ -3,8 +3,14 @@ package at.swe1ue4.plugins;
 import java.util.HashMap;
 import java.util.Map;
 
+import at.swe1ue4.textparser.WordTypes;
+
 
 public class MathPlugin implements PluginInterface {
+	int rating = 0;
+	int numberflag = 0;
+	final static int RATING_OPERATOR = 50;
+	final static int RATING_NUMBER = 25;
 	final static int OPERATOR_UNKNOWN = 0;
 	final static int OPERATOR_PLUS = 1;
 	final static int OPERATOR_MINUS = 2;
@@ -25,16 +31,36 @@ public class MathPlugin implements PluginInterface {
 
 	@Override
 	public int rateString(String[] text) {
+		rating = 0;
 		for(String token : text) {
 			for(Map.Entry<Integer, String> entry : OPERATOR_MAP.entrySet() )
-			{
+			{	
+				//what gets checked here???
 				if(token.contains( entry.getValue() ) ) {
-					return PluginInterface.MAX_RATING;
+					//rating += RATING_OPERATOR;					
 				}
 			}
+			for(int i=0;i<WordTypes.operator.size();i++) {
+				if(token.compareTo(WordTypes.operator.get(i)) == 0) {
+					rating += RATING_OPERATOR;
+				}
+			}
+			for(int i=0;i<WordTypes.realnumber.size();i++) {
+				if(token.compareTo(WordTypes.realnumber.get(i)) == 0) {
+					rating += RATING_NUMBER;
+					numberflag = 1;
+				}
+			}
+			if(numberflag == 0) {
+				return rating = PluginInterface.MIN_RATING;
+			}
 		}
-		
-		return 0;
+		if(rating > 100) {
+			return rating = PluginInterface.MAX_RATING;
+		}
+		else {
+			return rating;
+		}
 	}
 
 	@Override
