@@ -1,11 +1,9 @@
 package at.swe1ue4.plugins;
 
 import java.util.ArrayList;
-import java.util.Map;
-
 import at.swe1ue4.textparser.WordTypes;
 
-public class PsyPlugin implements PluginInterface{
+public class PsyPlugin implements PluginInterface {
 	int rating;
 	final static int RATING_VERB = 20;
 	final static int RATING_PRONOUN = 15;
@@ -17,7 +15,7 @@ public class PsyPlugin implements PluginInterface{
 	@Override
 	public int rateString(String[] text) {
 		//setting psychiatrist priority because when no plugin is found it is 
-		//likely that psyplugin can answer something that makes sense
+		//likely that PsyPlugin can answer something that makes sense
 		rating = 1;
 		for(String token : text) {
 			for(int i=0;i<WordTypes.verb.size();i++) {

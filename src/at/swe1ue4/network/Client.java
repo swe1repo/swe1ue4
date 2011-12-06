@@ -9,7 +9,6 @@ import java.net.Socket;
 
 import at.swe1ue4.plugins.PluginManager;
 import at.swe1ue4.textparser.TextParser;
-import at.swe1ue4.textparser.WordTypes;
 
 public class Client implements Runnable {
 
@@ -21,7 +20,7 @@ public class Client implements Runnable {
 		socket = socket_;
 		parser = new TextParser();
 		pluginManager = new PluginManager();
-		//initialise some words for proper selection of plugin manager
+		//Initialize some words for proper selection of plugin manager
 		parser.init_wordTypes();
 	}
 	
