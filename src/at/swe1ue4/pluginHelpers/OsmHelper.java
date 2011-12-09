@@ -25,6 +25,14 @@ public class OsmHelper {
 		return handler.getStreetCount();
 	}
 	
+	public boolean isCity(String text) {
+		return handler.containsCity(text);
+	}
+	
+	public boolean isStreet(String text) {
+		return handler.containsStreet(text);
+	}
+	
 	public int getCityCount() {
 		return handler.getCityCount();
 	}

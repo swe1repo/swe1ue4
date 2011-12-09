@@ -14,7 +14,7 @@ public class NaviPlugin implements PluginInterface {
 			return PluginInterface.MAX_RATING + 1;
 		}
 		
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -24,6 +24,14 @@ public class NaviPlugin implements PluginInterface {
 			helper.rebuildOsmIndex();
 			return "I have successfully rebuilt the street map(" + helper.getCityCount() + 
 					" cities, " + helper.getStreetCount() + " streets) in " + helper.getReloadTime() + " seconds.";
+		} else {
+			for(String str : text) {
+				String tmp = helper.getCityForStreet(str);
+				
+				if( tmp != null ) {
+					return tmp;
+				}
+			}
 		}
 		
 		return null;
