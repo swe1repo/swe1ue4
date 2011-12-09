@@ -14,7 +14,7 @@ public class NaviPlugin implements PluginInterface {
 			return PluginInterface.MAX_RATING + 1;
 		}
 		
-		return 1;
+		return 0;
 	}
 
 	@Override
