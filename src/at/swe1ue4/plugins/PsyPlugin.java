@@ -1,11 +1,9 @@
 package at.swe1ue4.plugins;
 
 import java.util.ArrayList;
-import java.util.Map;
+import at.swe1ue4.textparser.WordTypes; 
 
-import at.swe1ue4.textparser.WordTypes;
-
-public class PsyPlugin implements PluginInterface{
+public class PsyPlugin implements PluginInterface {
 	final static int RATING_VERB = 20;
 	final static int RATING_PRONOUN = 15;
 	final static int RATING_POSSESSIVEPRONOUN = 10;

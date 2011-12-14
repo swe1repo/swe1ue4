@@ -6,9 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import at.swe1ue4.textparser.*;
-
 import at.swe1ue4.network.MainServer;
 
 

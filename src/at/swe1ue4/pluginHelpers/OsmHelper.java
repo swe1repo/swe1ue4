@@ -11,9 +11,30 @@ import org.xml.sax.SAXException;
 
 public class OsmHelper {
 	OsmHandler handler;
+	long lastReloadTime = 0L;
 	
 	public OsmHelper() {
 		handler = new OsmHandler();
+	}
+	
+	public long getReloadTime() {
+		return lastReloadTime / 1000;
+	}
+	
+	public int getStreetCount() {
+		return handler.getStreetCount();
+	}
+	
+	public boolean isCity(String text) {
+		return handler.containsCity(text);
+	}
+	
+	public boolean isStreet(String text) {
+		return handler.containsStreet(text);
+	}
+	
+	public int getCityCount() {
+		return handler.getCityCount();
 	}
 	
 	public String getCityForStreet(String street) {
@@ -22,6 +43,8 @@ public class OsmHelper {
 	
 	public void rebuildOsmIndex() {
 		synchronized( MainServer.getOsmFilepath() ) {
+			long start = System.currentTimeMillis();
+			
 			// obtain a SAXParserFactory
 			SAXParserFactory pf = SAXParserFactory.newInstance();
 			
@@ -47,6 +70,8 @@ public class OsmHelper {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			lastReloadTime = System.currentTimeMillis() - start;
 		}
 	}
 }
