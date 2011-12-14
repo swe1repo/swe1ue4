@@ -16,12 +16,12 @@ public class MathPlugin implements PluginInterface {
 	final static int OPERATOR_MINUS = 2;
 	final static int OPERATOR_DIVIDE = 3;
 	final static int OPERATOR_MULT = 4;
-	final static String ERROR_STRING = "Diese Frage kann ich als Mathematiker leider nicht beantworten\n";
+	final static String ERROR_STRING = "This question cannot be answered by the mathimatician!\n";
 	final static Map<Integer, String> OPERATOR_MAP;
 	
 	static {
 		Map<Integer, String> tmp = new HashMap<Integer, String>();
-		tmp.put(OPERATOR_UNKNOWN, "");
+		
 		tmp.put(OPERATOR_PLUS, "+");
 		tmp.put(OPERATOR_MINUS, "-");
 		tmp.put(OPERATOR_DIVIDE, "/");
@@ -37,30 +37,12 @@ public class MathPlugin implements PluginInterface {
 			{	
 				//what gets checked here???
 				if(token.contains( entry.getValue() ) ) {
-					//rating += RATING_OPERATOR;					
+					return PluginInterface.MAX_RATING;
 				}
 			}
-			for(int i=0;i<WordTypes.operator.size();i++) {
-				if(token.compareTo(WordTypes.operator.get(i)) == 0) {
-					rating += RATING_OPERATOR;
-				}
-			}
-			for(int i=0;i<WordTypes.realnumber.size();i++) {
-				if(token.compareTo(WordTypes.realnumber.get(i)) == 0) {
-					rating += RATING_NUMBER;
-					numberflag = 1;
-				}
-			}
-			if(numberflag == 0) {
-				return rating = PluginInterface.MIN_RATING;
-			}
 		}
-		if(rating > 100) {
-			return rating = PluginInterface.MAX_RATING;
-		}
-		else {
-			return rating;
-		}
+		
+		return PluginInterface.MIN_RATING;
 	}
 
 	@Override
@@ -130,7 +112,7 @@ public class MathPlugin implements PluginInterface {
 		}
 		
 		// pass back the result
-		return "Das Ergebnis der Rechnung " + op1 + " " + OPERATOR_MAP.get(operationType) + " " + op2 + " ist " + res + ".\n" ;
+		return "The result of the calculation " + op1 + " " + OPERATOR_MAP.get(operationType) + " " + op2 + " is " + res + ".\n" ;
 	}
 
 }

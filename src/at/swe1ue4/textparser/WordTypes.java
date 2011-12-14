@@ -18,6 +18,7 @@ public class WordTypes {
 	public static ArrayList<String> pronoun = new ArrayList<String>();
 	public static ArrayList<String> greetingword = new ArrayList<String>();
 	public static ArrayList<String> keyword = new ArrayList<String>();
+	public static ArrayList<String> dateword = new ArrayList<String>();
 	
 	public static ArrayList<String> yesAnswer = new ArrayList<String>();
 	public static ArrayList<String> noAnswer = new ArrayList<String>();
@@ -109,6 +110,11 @@ public class WordTypes {
 		if(cat.compareTo("keyword") == 0) {
 			for(int i=0;i<tmp.length;i++) {
 				keyword.add(tmp[i]);
+			}
+		}
+		if(cat.compareTo("dateword") == 0) {
+			for(int i=0;i<tmp.length;i++) {
+				dateword.add(tmp[i]);
 			}
 		}
 	}

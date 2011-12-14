@@ -157,7 +157,7 @@ public class TextParser {
 		words = "Why do you say that?";
 		WordTypes.init_answers("youAnswer", words);
 	
-		words = "What makes you think i am ";
+		words = "What makes you think i am";
 		WordTypes.init_answers("youAreAnswer", words);
 		words = "Do you sometimes wish you were";
 		WordTypes.init_answers("youAreAnswer", words);
@@ -198,6 +198,9 @@ public class TextParser {
 		WordTypes.init_answers("randomAnswer", words);
 		words = "I think you need to talk about that in more detail.";
 		WordTypes.init_answers("randomAnswer", words);
+		
+		words = "date time year tomorrow day today yesterday month";
+		WordTypes.categorize("dateword", words);
 	}
 	
 }

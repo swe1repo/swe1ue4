@@ -6,19 +6,17 @@ import java.util.Map;
 import at.swe1ue4.textparser.WordTypes;
 
 public class PsyPlugin implements PluginInterface{
-	int rating;
 	final static int RATING_VERB = 20;
 	final static int RATING_PRONOUN = 15;
 	final static int RATING_POSSESSIVEPRONOUN = 10;
 	final static int RATING_PREPOSITION = 15;
 	final static int RATING_KEYWORD = 20;
-	String verb;
 	
 	@Override
 	public int rateString(String[] text) {
 		//setting psychiatrist priority because when no plugin is found it is 
 		//likely that psyplugin can answer something that makes sense
-		rating = 1;
+		int rating = 1;
 		for(String token : text) {
 			for(int i=0;i<WordTypes.verb.size();i++) {
 				if(token.compareTo(WordTypes.verb.get(i)) == 0) {
@@ -56,13 +54,28 @@ public class PsyPlugin implements PluginInterface{
 	
 	@Override
 	public String getMessageForString(String[] text) {
+		String verb = null;
 		//TODO: Make ignorlist for verbs to be ignored (is, are, am, can, ...)
-		for(String asd : text) {
+		for(int x=0;x<text.length;x++) {
+			String asd = text[x];
 			for(int i=0;i<WordTypes.verb.size();i++) {
 				if(asd.compareTo(WordTypes.verb.get(i)) == 0) {
 					//ignore the can verb because in the "can you" response program needs the second verb
 					if((asd.compareTo("can") != 0) && asd.compareTo("are") != 0) {
-						this.verb = asd;
+						verb = asd;
+					}
+					else {
+						if((x+1) < text.length) {
+							if(!WordTypes.pronoun.contains(text[x+1]))
+							{
+								verb = text[x+1];
+							}
+							else {
+								if((x+2) < text.length) {
+									verb = text[x+2];
+								}
+							}
+						}
 					}
 				}
 			}	
@@ -72,7 +85,7 @@ public class PsyPlugin implements PluginInterface{
 				if(as.compareTo(WordTypes.verb.get(i)) == 0) {
 					//special case in order to respond to "you are" statement. otherwise the programm goes to "you" answers.
 					if(as.compareTo("are") == 0) {
-						return foundKeyWord(as);
+						return foundKeyWord(as,verb);
 					}		
 				}
 			}	
@@ -83,17 +96,17 @@ public class PsyPlugin implements PluginInterface{
 		for(String token : text) {
 			for(int i=0;i<WordTypes.greetingword.size();i++) {
 				if(token.compareTo(WordTypes.greetingword.get(i)) == 0) {
-					return foundGreetingWord(token);
+					return foundGreetingWord(token,verb);
 				}
 			}
 			for(int i=0;i<WordTypes.questionword.size();i++) {
 				if(token.compareTo(WordTypes.questionword.get(i)) == 0) {
-					return foundQuestionWord(token);
+					return foundQuestionWord(token,verb);
 				}
 			}
 			for(int i=0;i<WordTypes.keyword.size();i++) {
 				if(token.compareTo(WordTypes.keyword.get(i)) == 0) {
-					return foundKeyWord(token);
+					return foundKeyWord(token,verb);
 				}
 			}
 		}
@@ -102,12 +115,12 @@ public class PsyPlugin implements PluginInterface{
 		return getrandomAnswer();
 	}
 	
-	public String foundGreetingWord(String word) {
+	public String foundGreetingWord(String word, String verb) {
 		int random = 0 + (int) (Math.random() * (WordTypes.greetingAnswer.size() - 0));	
 		return WordTypes.greetingAnswer.get(random);
 	}
 	
-	public String foundQuestionWord(String word) {
+	public String foundQuestionWord(String word, String verb) {
 		int random = 0 + (int) (Math.random() * (WordTypes.questionAnswer.size() - 0));
 		int jumpToRandomAnswer = 1 + (int) (Math.random() * (3 - 1));
 		
@@ -119,7 +132,7 @@ public class PsyPlugin implements PluginInterface{
 		}
 	}
 	
-	public String foundKeyWord(String word) {
+	public String foundKeyWord(String word, String verb) {
 		int random;
 		if(word.compareTo("yes") == 0) {
 			random = 0 + (int) (Math.random() * (WordTypes.yesAnswer.size() - 0));
@@ -130,6 +143,9 @@ public class PsyPlugin implements PluginInterface{
 			return WordTypes.noAnswer.get(random);
 		}
 		else if(word.compareTo("are") == 0) {
+			if(verb == null) {
+				return getrandomAnswer();
+			}
 			random = 0 + (int) (Math.random() * (WordTypes.youAreAnswer.size() - 0));
 			return WordTypes.youAreAnswer.get(random) +" "+ verb + "?";
 		}
@@ -142,6 +158,9 @@ public class PsyPlugin implements PluginInterface{
 			return WordTypes.becauseAnswer.get(random);
 		}
 		else if(word.compareTo("can") == 0) {
+			if(verb == null) {
+				return getrandomAnswer();
+			}
 			random = 0 + (int) (Math.random() * (WordTypes.canYouAnswer.size() - 0));
 			ArrayList<String> tmp = new ArrayList<String>();
 			tmp.add(WordTypes.canYouAnswer.get(0) + verb + " your self.");
