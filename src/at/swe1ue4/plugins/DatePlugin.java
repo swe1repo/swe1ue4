@@ -2,7 +2,6 @@ package at.swe1ue4.plugins;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import java.util.Map;
 
 import at.swe1ue4.textparser.WordTypes;
 
