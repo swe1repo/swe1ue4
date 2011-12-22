@@ -3,6 +3,11 @@ package at.swe1ue4.plugins;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This plugin handles mathematical questions.
+ * 
+ * @author patrick
+ */
 public class MathPlugin implements PluginInterface {
 	int rating = 0;
 	int numberflag = 0;
@@ -13,7 +18,7 @@ public class MathPlugin implements PluginInterface {
 	final static int OPERATOR_MINUS = 2;
 	final static int OPERATOR_DIVIDE = 3;
 	final static int OPERATOR_MULT = 4;
-	final static String ERROR_STRING = "This question cannot be answered by the mathematician!\n";
+	final static String ERROR_STRING = "This question cannot be answered by the mathematician!";
 	final static Map<Integer, String> OPERATOR_MAP;
 	
 	static {
@@ -109,7 +114,7 @@ public class MathPlugin implements PluginInterface {
 		}
 		
 		// pass back the result
-		return "The result of the calculation " + op1 + " " + OPERATOR_MAP.get(operationType) + " " + op2 + " is " + res + ".\n" ;
+		return "The result of the calculation " + op1 + " " + OPERATOR_MAP.get(operationType) + " " + op2 + " is " + res + "." ;
 	}
 
 }

@@ -1,8 +1,10 @@
-/*package at.swe1ue4.plugins;
+package at.swe1ue4.plugins;
 
 import at.swe1ue4.pluginHelpers.OsmHelper;
 
 public class NaviPlugin implements PluginInterface {
+	final static String ERROR_STRING = "This question cannot be answered by the navigator!";
+	
 	OsmHelper helper = new OsmHelper();
 
 	@Override
@@ -14,7 +16,13 @@ public class NaviPlugin implements PluginInterface {
 			return PluginInterface.MAX_RATING + 1;
 		}
 		
-		return 0;
+		for(String word : text) {
+			if(helper.isStreet(word)) {
+				return PluginInterface.MAX_RATING;
+			}
+		}
+		
+		return PluginInterface.MIN_RATING;
 	}
 
 	@Override
@@ -26,15 +34,15 @@ public class NaviPlugin implements PluginInterface {
 					" cities, " + helper.getStreetCount() + " streets) in " + helper.getReloadTime() + " seconds.";
 		} else {
 			for(String str : text) {
-				String tmp = helper.getCityForStreet(str);
+				String city = helper.getCityForStreet(str);
 				
-				if( tmp != null ) {
-					return tmp;
+				if( city != null ) {
+					return str + " is in " + city + ".";
 				}
 			}
 		}
 		
-		return null;
+		return ERROR_STRING;
 	}
 	
 	boolean isReload(String[] text) {
@@ -46,11 +54,13 @@ public class NaviPlugin implements PluginInterface {
 		
 		// bypass rating system for the NaviPlugin's reload command
 		if( originalText.equals("Please reload the street map") || originalText.equals("Reload the street map") ||
-			originalText.equals("please reload the street map") || originalText.equals("reload the street map") ) {
+			originalText.equals("please reload the street map") || originalText.equals("reload the street map") ||
+			originalText.equals("Please rebuild the street map") || originalText.equals("Rebuild the street map") ||
+			originalText.equals("please rebuild the street map") || originalText.equals("rebuild the street map")) {
 			// this command must be executed
 			return true;
 		}
 		
 		return false;
 	}
-}*/
+}

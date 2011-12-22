@@ -18,8 +18,18 @@ public class TextParser {
 		
 		words = text.split(delimiter);
 		
+		for(int i = 0; i < words.length; ++i) {
+			words[i] = words[i].toLowerCase();
+		}
+		
+		/** Strip trailing ?'s. */
+		if( words[words.length - 1].endsWith("?") || words[words.length - 1].endsWith("!") || words[words.length - 1].endsWith(".")) {
+			words[words.length - 1] = words[words.length - 1].substring(0, words[words.length - 1].length() - 1);
+		}
+		
 		return words;
 	}
+	
 	/**
 	 * This method contains all words and responses, the program can interpret and respond
 	 */

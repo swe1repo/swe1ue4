@@ -1,4 +1,4 @@
-/*package at.swe1ue4.pluginHelpers;
+package at.swe1ue4.pluginHelpers;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -106,8 +106,8 @@ public class OsmHandler extends DefaultHandler {
 			}
 			
 			if(streetTmp != null && cityTmp != null) {
-				streetMap.put(streetTmp, getIdForCity(cityTmp) );
-				System.out.println("Found pair " + streetTmp + " / " + cityTmp);
+				streetMap.put(streetTmp.toLowerCase(), getIdForCity(cityTmp) );
+				// System.out.println("Found pair " + streetTmp + " / " + cityTmp);
 			}
 		} else if(qName.equals("tag") && elementStack.peek().equals("relation")) {
 			if( attributes.getValue("k").equals("name") ) {
@@ -154,7 +154,7 @@ public class OsmHandler extends DefaultHandler {
 		for(Pair< List<Integer>, String > pair : relationList) {
 			for(Integer id : pair.getFirst() ) {
 				streetMap.put(getStreetForId(id), getIdForCity(pair.getSecond()) );
-				System.out.println("Found pair " + getStreetForId(id) + " / " + pair.getSecond());
+				//System.out.println("Found pair " + getStreetForId(id) + " / " + pair.getSecond());
 			}
 		}
 		
@@ -215,4 +215,4 @@ public class OsmHandler extends DefaultHandler {
 	String getStreetForId(Integer id) {
 		return streetNameIdPairs.get(id);
 	}
-}*/
+}
