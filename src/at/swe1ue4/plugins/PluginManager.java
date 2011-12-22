@@ -117,6 +117,7 @@ public class PluginManager {
 	 */
 	public String getMessageFromPlugin(String[] text) {
 		PluginInterface plugin = null;
+		//WHY -1
 		int maxRating = PluginInterface.MIN_RATING - 1;
 		
 		// find the plugin with highest rating

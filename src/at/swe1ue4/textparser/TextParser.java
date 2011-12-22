@@ -18,15 +18,11 @@ public class TextParser {
 		
 		words = text.split(delimiter);
 		
-		//System.out.println(words.length +" Words found");
-/*		
-		for(int i=0;i<words.length;i++) {
-			System.out.println(words[i] +" - Word found");
-		}
-*/		
 		return words;
 	}
-	
+	/**
+	 * This method contains all words and responses, the program can interpret and respond
+	 */
 	public void init_wordTypes() {
 		String words;
 		

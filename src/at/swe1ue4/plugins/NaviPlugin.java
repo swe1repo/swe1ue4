@@ -1,4 +1,4 @@
-package at.swe1ue4.plugins;
+/*package at.swe1ue4.plugins;
 
 import at.swe1ue4.pluginHelpers.OsmHelper;
 
@@ -53,4 +53,4 @@ public class NaviPlugin implements PluginInterface {
 		
 		return false;
 	}
-}
+}*/

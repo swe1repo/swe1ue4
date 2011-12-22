@@ -21,6 +21,11 @@ public class DatePlugin implements PluginInterface {
 		}
 		return 0;
 	}
+	/**
+	 * 
+	 * @param dateFormat  defines how the date should be formatted
+	 * @return a String with the date/time in the specified format
+	 */
 	public String now(String dateFormat) {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);

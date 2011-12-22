@@ -35,7 +35,12 @@ public class WordTypes {
 	
 	public WordTypes() {
 	}
-	
+	/**
+	 * Stores the words in the arraylist
+	 * @param cat depending on the category entered the words are saved in the 
+	 * specific category-list
+	 * @param words contains all the words of one category
+	 */
 	public static void categorize(String cat,String words) {
 		
 		String delimiter = " ";
@@ -119,6 +124,11 @@ public class WordTypes {
 		}
 	}
 	
+	/**
+	 * Stores one answers of one category in the arraylist
+	 * @param cat defines the category the answer belong to
+	 * @param answer a String with a possible response from the category
+	 */
 	public static void init_answers(String cat, String answer) {
 		if(cat.compareTo("yesAnswer") == 0) {
 			yesAnswer.add(answer);
