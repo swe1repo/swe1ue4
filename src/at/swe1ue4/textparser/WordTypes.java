@@ -2,6 +2,11 @@ package at.swe1ue4.textparser;
 
 import java.util.ArrayList;
 
+/**
+ * stores parsed words into arraylist and categorizes them
+ * @author benno
+ *
+ */
 public class WordTypes {
 
 	public static ArrayList<String> realnumber = new ArrayList<String>();

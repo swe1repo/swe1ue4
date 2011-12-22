@@ -18,7 +18,7 @@ public class MathPlugin implements PluginInterface {
 	final static int OPERATOR_MINUS = 2;
 	final static int OPERATOR_DIVIDE = 3;
 	final static int OPERATOR_MULT = 4;
-	final static String ERROR_STRING = "This question cannot be answered by the mathematician!";
+	public final static String ERROR_STRING = "This question cannot be answered by the mathematician!";
 	final static Map<Integer, String> OPERATOR_MAP;
 	
 	static {
@@ -37,13 +37,11 @@ public class MathPlugin implements PluginInterface {
 		for(String token : text) {
 			for(Map.Entry<Integer, String> entry : OPERATOR_MAP.entrySet() )
 			{	
-				//what gets checked here???
 				if(token.contains( entry.getValue() ) ) {
 					return PluginInterface.MAX_RATING;
 				}
 			}
 		}
-		
 		return PluginInterface.MIN_RATING;
 	}
 
@@ -51,7 +49,6 @@ public class MathPlugin implements PluginInterface {
 	public String getMessageForString(String[] text) {
 		double op1 = 0, op2 = 0, res = 0;
 		int operationType = OPERATOR_UNKNOWN;
-		
 		
 		int i;
 		// determine the operation type
