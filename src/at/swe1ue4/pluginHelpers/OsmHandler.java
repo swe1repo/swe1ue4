@@ -13,15 +13,29 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * The OsmHandler class is used to parse the OSM data file into a set of City/Street relations using the SAX parser class.
+ * 
+ * @author patrick
+ */
 public class OsmHandler extends DefaultHandler {
+	// index-specific temporary values
 	static Integer idCount = 0;
-	static String cityTmp = null;
-	static String streetTmp = null;
+	static String  cityTmp = null;
+	static String  streetTmp = null;
 	static Integer idTmp = 0;
 	
 	// final results
+	/** the streetMap holds all of the streets and their corresponding IDs. */
 	static Map<String, Integer> streetMap = new HashMap<String, Integer>();
+	
+	/** 
+	 * the buildupMap holds the lookupMap's contents in reverse order for efficient access during buildup. 
+	 * It is cleared once indexing is finished.
+	 */
 	static Map<String, Integer> buildupMap = new HashMap<String, Integer>(); 
+	
+	/** the lookupMap contains all of the cities and their corresponding IDs. */
 	static Map<Integer, String> lookupMap = new HashMap<Integer, String>();
 	
 	// parsing variables
@@ -64,6 +78,7 @@ public class OsmHandler extends DefaultHandler {
      throws SAXException {
 		// using the rules from http://wiki.openstreetmap.org/wiki/OSM_tags_for_routing#City
 		// to determine if a way is within a city
+		// EXCLUDING bounding boxes for complexity reasons
 		
 		// record city - street relations
 		if(qName.equals("way")) {
@@ -115,7 +130,6 @@ public class OsmHandler extends DefaultHandler {
 	@Override
     public void endElement(String uri, String localName, String qName)
         throws SAXException {
-		
 		if(qName.equals("way")) {
 			cityTmp = null;
 			streetTmp = null;
@@ -179,6 +193,10 @@ public class OsmHandler extends DefaultHandler {
 		buildupMap = new HashMap<String, Integer>();
 	}
 	
+	/**
+	 * @param city The name of a city.
+	 * @return The corresponding ID to a city's name.
+	 */
 	Integer getIdForCity(String city) {
 		Integer retVal = 0;
 		
@@ -190,6 +208,10 @@ public class OsmHandler extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * @param id A street's ID.
+	 * @return The street's corresponding name.
+	 */
 	String getStreetForId(Integer id) {
 		return streetNameIdPairs.get(id);
 	}
