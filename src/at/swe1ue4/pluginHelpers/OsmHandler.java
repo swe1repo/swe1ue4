@@ -1,4 +1,4 @@
-/*package at.swe1ue4.pluginHelpers;
+package at.swe1ue4.pluginHelpers;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -215,4 +215,4 @@ public class OsmHandler extends DefaultHandler {
 	String getStreetForId(Integer id) {
 		return streetNameIdPairs.get(id);
 	}
-}*/
+}

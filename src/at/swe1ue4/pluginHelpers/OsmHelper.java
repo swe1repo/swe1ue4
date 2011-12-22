@@ -1,4 +1,4 @@
-/*package at.swe1ue4.pluginHelpers;
+package at.swe1ue4.pluginHelpers;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,4 +74,4 @@ public class OsmHelper {
 			lastReloadTime = System.currentTimeMillis() - start;
 		}
 	}
-}*/
+}
