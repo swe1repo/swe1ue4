@@ -14,6 +14,7 @@ public class MathPluginTest {
 		assertEquals(mp.rateString(tp.readText(text)), 100);
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test
 	public void testGetMessageForString() {
 		MathPlugin mp = new MathPlugin();
