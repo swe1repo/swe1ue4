@@ -5,7 +5,7 @@ import at.swe1ue4.pluginHelpers.OsmHelper;
 public class NaviPlugin implements PluginInterface {
 	final static String ERROR_STRING = "This question cannot be answered by the navigator!";
 	
-	OsmHelper helper = new OsmHelper();
+	public OsmHelper helper = new OsmHelper();
 
 	@Override
 	public int rateString(String[] text) {
@@ -45,7 +45,7 @@ public class NaviPlugin implements PluginInterface {
 		return ERROR_STRING;
 	}
 	
-	boolean isReload(String[] text) {
+	public boolean isReload(String[] text) {
 		String originalText = "";
 		for(String s : text) {
 			originalText += s + " ";

@@ -53,10 +53,10 @@ public class OsmHelper {
 			try {
 				parser = pf.newSAXParser();
 			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
+				System.err.println("An error occured when initiating the SAX parser.");
 				e.printStackTrace();
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
+				System.err.println("An error occured when initiating the SAX parser.");
 				e.printStackTrace();
 			}
 			
@@ -67,7 +67,7 @@ public class OsmHelper {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.err.println("An error occured when initiating the SAX parser.");
 				e.printStackTrace();
 			}
 			

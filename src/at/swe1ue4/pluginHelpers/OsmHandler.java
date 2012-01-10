@@ -185,7 +185,6 @@ public class OsmHandler extends DefaultHandler {
 				f2.write(entry.getKey() + " " + entry.getValue() + "\n");
 				lookupMap.put(entry.getValue(), entry.getKey());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

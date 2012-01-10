@@ -31,11 +31,19 @@ public class MainServer {
 		return MainServer.configFilePath;
 	}
 	
+	public static void setConfigFilepath(String path) {
+		MainServer.configFilePath = path;
+	}
+	
 	/**
 	 * @return The path to the openstreetmap file that will be used with NaviPlugins
 	 */
 	public static String getOsmFilepath() {
 		return MainServer.osmFilePath;
+	}
+	
+	public static void setOsmFilepath(String path) {
+		MainServer.osmFilePath = path;
 	}
 	
 	public static void print_usage() {
