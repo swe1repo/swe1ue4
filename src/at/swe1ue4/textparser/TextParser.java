@@ -40,7 +40,7 @@ public class TextParser {
 		WordTypes.categorize("keyword", words);
 		
 		words = "i me mine myself we us ours ourselves ourself " +
-				"you yours yourself yourselves he him himself " +
+				"you yours your yourself yourselves he him himself " +
 				"she hers herself it that those this these things " +
 				"thing they them themselves theirs somebody everybody " +
 				"something everything";

@@ -12,15 +12,15 @@ public class MainServer {
 	ServerSocket serverSocket = null;
 	final int port;
 	final ExecutorService executor;
-	static String configFilePath;
+	public static String configFilePath;
 	static String osmFilePath;
 	
-	MainServer(int portnumber) {
+	public MainServer(int portnumber) {
 		port = portnumber;
 		executor = Executors.newCachedThreadPool();
 	}
 	
-	int getPort() {
+	public int getPort() {
 		return port;
 	}
 	
