@@ -119,6 +119,7 @@ public class WordTypes {
 			}
 		}
 		if(cat.compareTo("questionword") == 0) {
+			questionword = new ArrayList<String>();
 			for(int i=0;i<tmp.length;i++) {
 				questionword.add(tmp[i]);
 			}
