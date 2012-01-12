@@ -25,15 +25,15 @@ public class WordTypes {
 	public static ArrayList<String> keyword = new ArrayList<String>();
 	public static ArrayList<String> dateword = new ArrayList<String>();
 	
-	public static ArrayList<String> yesAnswer = new ArrayList<String>();
-	public static ArrayList<String> noAnswer = new ArrayList<String>();
-	public static ArrayList<String> youAnswer = new ArrayList<String>();
-	public static ArrayList<String> youAreAnswer = new ArrayList<String>();
-	public static ArrayList<String> becauseAnswer = new ArrayList<String>();
-	public static ArrayList<String> randomAnswer = new ArrayList<String>();
-	public static ArrayList<String> canYouAnswer = new ArrayList<String>();
-	public static ArrayList<String> questionAnswer = new ArrayList<String>();
-	public static ArrayList<String> greetingAnswer = new ArrayList<String>();
+	public static ArrayList<String> yesAnswer = null;
+	public static ArrayList<String> noAnswer = null;
+	public static ArrayList<String> youAnswer = null;
+	public static ArrayList<String> youAreAnswer = null;
+	public static ArrayList<String> becauseAnswer = null;
+	public static ArrayList<String> randomAnswer = null;
+	public static ArrayList<String> canYouAnswer = null;
+	public static ArrayList<String> questionAnswer = null;
+	public static ArrayList<String> greetingAnswer = null;
 	
 	
 	private static String[] tmp;
@@ -136,30 +136,39 @@ public class WordTypes {
 	 */
 	public static void init_answers(String cat, String answer) {
 		if(cat.compareTo("yesAnswer") == 0) {
+			yesAnswer = new ArrayList<String>();
 			yesAnswer.add(answer);
 		}
 		if(cat.compareTo("noAnswer") == 0) {
+			noAnswer  = new ArrayList<String>();
 			noAnswer.add(answer);
 		}
 		if(cat.compareTo("questionAnswer") == 0) {
+			questionAnswer = new ArrayList<String>();
 			questionAnswer.add(answer);
 		}
 		if(cat.compareTo("youAnswer") == 0) {
+			youAnswer = new ArrayList<String>();
 			youAnswer.add(answer);
 		}
 		if(cat.compareTo("youAreAnswer") == 0) {
+			youAreAnswer = new ArrayList<String>();
 			youAreAnswer.add(answer);
 		}
 		if(cat.compareTo("becauseAnswer") == 0) {
+			becauseAnswer = new ArrayList<String>();
 			becauseAnswer.add(answer);
 		}
 		if(cat.compareTo("canYouAnswer") == 0) {
+			canYouAnswer = new ArrayList<String>();
 			canYouAnswer.add(answer);
 		}
 		if(cat.compareTo("randomAnswer") == 0) {
+			randomAnswer = new ArrayList<String>();
 			randomAnswer.add(answer);
 		}
 		if(cat.compareTo("greetingAnswer") == 0) {
+			greetingAnswer = new ArrayList<String>();
 			greetingAnswer.add(answer);
 		}
 	}
