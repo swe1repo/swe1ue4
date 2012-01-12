@@ -112,13 +112,14 @@ public class WordTypes {
 				pronoun.add(tmp[i]);
 			}
 		}
-		if(cat.compareTo("preposistion") == 0) {
+		if(cat.compareTo("preposition") == 0) {
 			preposition = new ArrayList<String>();
 			for(int i=0;i<tmp.length;i++) {
 				preposition.add(tmp[i]);
 			}
 		}
 		if(cat.compareTo("questionword") == 0) {
+			questionword = new ArrayList<String>();
 			for(int i=0;i<tmp.length;i++) {
 				questionword.add(tmp[i]);
 			}
