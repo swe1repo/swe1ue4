@@ -53,7 +53,6 @@ public class PsyPlugin implements PluginInterface {
 	@Override
 	public String getMessageForString(String[] text) {
 		String verb = null;
-		//TODO: Make ignorlist for verbs to be ignored (is, are, am, can, ...)
 		for(int x=0;x<text.length;x++) {
 			String asd = text[x];
 			for(int i=0;i<WordTypes.verb.size();i++) {
@@ -114,57 +113,58 @@ public class PsyPlugin implements PluginInterface {
 	}
 	
 	public String foundGreetingWord(String word, String verb) {
-		int random = 0 + (int) (Math.random() * (WordTypes.greetingAnswer.size() - 0));	
-		return WordTypes.greetingAnswer.get(random);
+		long random = 0 + Math.round((Math.random() * (WordTypes.greetingAnswer.size() - 1)));	
+		return WordTypes.greetingAnswer.get((int) random);
 	}
 	
 	public String foundQuestionWord(String word, String verb) {
-		int random = 0 + (int) (Math.random() * (WordTypes.questionAnswer.size() - 0));
-		int jumpToRandomAnswer = 1 + (int) (Math.random() * (3 - 1));
+		long random = 0 + Math.round((Math.random() * (WordTypes.questionAnswer.size() - 1)));
+		long jumpToRandomAnswer = 1 + Math.round((Math.random() * (3 - 1)));
 		
 		if(jumpToRandomAnswer == 2) {
 			return getrandomAnswer();
 		}
 		else {
-			return WordTypes.questionAnswer.get(random);
+			return WordTypes.questionAnswer.get((int)random);
 		}
 	}
 	
 	public String foundKeyWord(String word, String verb) {
-		int random;
+		long random;
 		if(word.compareTo("yes") == 0) {
-			random = 0 + (int) (Math.random() * (WordTypes.yesAnswer.size() - 0));
-			return WordTypes.yesAnswer.get(random);
+			random = 0 + Math.round((Math.random() * (WordTypes.yesAnswer.size() - 1)));
+			return WordTypes.yesAnswer.get((int)random);
 		}
 		else if(word.compareTo("no") == 0) {
-			random = 0 + (int) (Math.random() * (WordTypes.noAnswer.size() - 0));
-			return WordTypes.noAnswer.get(random);
+			random = 0 + Math.round((Math.random() * (WordTypes.noAnswer.size() - 1)));
+			return WordTypes.noAnswer.get((int)random);
 		}
 		else if(word.compareTo("are") == 0) {
 			if(verb == null) {
 				return getrandomAnswer();
 			}
-			random = 0 + (int) (Math.random() * (WordTypes.youAreAnswer.size() - 0));
-			return WordTypes.youAreAnswer.get(random) +" "+ verb + "?";
+			random = 0 + Math.round((Math.random() * (WordTypes.youAreAnswer.size() - 1)));
+			return WordTypes.youAreAnswer.get((int)random) +" "+ verb + "?";
 		}
 		else if(word.compareTo("you") == 0) {
-			random = 0 + (int) (Math.random() * (WordTypes.youAnswer.size() - 0));
-			return WordTypes.youAnswer.get(random);
+			random = 0 + Math.round((Math.random() * (WordTypes.youAnswer.size() - 1)));
+			System.out.println("Size of you answer"+WordTypes.youAnswer.size());
+			return WordTypes.youAnswer.get((int)random);
 		}
 		else if(word.compareTo("because") == 0) {
-			random = 0 + (int) (Math.random() * (WordTypes.becauseAnswer.size() - 0));
-			return WordTypes.becauseAnswer.get(random);
+			random = 0 + Math.round((Math.random() * (WordTypes.becauseAnswer.size() - 1)));
+			return WordTypes.becauseAnswer.get((int)random);
 		}
 		else if(word.compareTo("can") == 0) {
 			if(verb == null) {
 				return getrandomAnswer();
 			}
-			random = 0 + (int) (Math.random() * (WordTypes.canYouAnswer.size() - 0));
+			random = 0 + Math.round((Math.random() * (WordTypes.canYouAnswer.size() - 1)));
 			ArrayList<String> tmp = new ArrayList<String>();
 			tmp.add(WordTypes.canYouAnswer.get(0) + verb + " your self.");
 			tmp.add(WordTypes.canYouAnswer.get(1) + verb + " dont you?");
 			tmp.add(WordTypes.canYouAnswer.get(2));
-			return tmp.get(random);
+			return tmp.get((int)random);
 		}
 		else {
 			return "roses are red\nviolets are blue\nsome poems rhyme\nbut not this one.";
@@ -172,7 +172,7 @@ public class PsyPlugin implements PluginInterface {
 	}
 	
 	public String getrandomAnswer() {
-		int random = 0 + (int) (Math.random() * (WordTypes.randomAnswer.size() - 0));
-		return WordTypes.randomAnswer.get(random);
+		long random = 0 + Math.round((Math.random() * (WordTypes.randomAnswer.size() - 1)));
+		return WordTypes.randomAnswer.get((int)random);
 	}
 }
